@@ -1,7 +1,7 @@
 import React from "react";
 import { Link } from "react-router-dom";
 import bannarpng from '../../assets/bannar.jpg'; // import করা হয়েছে
-
+  
 const Home = () => {
   return (
     <div className="mt-5">
