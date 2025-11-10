@@ -9,6 +9,10 @@ import RootLayout from './layout/RootLayout.jsx';
 import Home from './components/Home/Home.jsx';
 import AllBooks from './components/AllBooks/AllBooks.jsx';
 import AuthProvider from './context/AuthProvider.jsx';
+import Register from './components/Register/Register.jsx';
+import AddBook from './components/AddBook/AddBook.jsx';
+import MyBooks from './components/myBook/MyBooks.jsx';
+import Error from './components/error/Error.jsx';
 
 const router = createBrowserRouter([
   {
@@ -22,6 +26,22 @@ const router = createBrowserRouter([
       {
         path: 'allBooks',
         Component: AllBooks
+      },
+      {
+        path: 'register',
+        Component: Register
+      },
+      {
+        path: 'addBooks',
+        element: <AddBook></AddBook>
+      },
+      {
+        path: 'myBooks',
+        element: <MyBooks></MyBooks>
+      },
+      {
+        path:'*',
+        element: <Error></Error>
       }
     ]
   },
