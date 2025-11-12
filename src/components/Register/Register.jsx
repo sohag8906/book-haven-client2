@@ -60,9 +60,9 @@ const Register = () => {
   return (
     <div className="min-h-screen flex items-center justify-center bg-base-200">
       <Toaster position="top-center" />
-      <div className="card mx-auto bg-base-100 w-full max-w-sm shadow-2xl">
+      <div className="card mx-auto bg-base-200 w-full max-w-sm shadow-2xl">
         <div className="card-body">
-          <h1 className="text-4xl font-bold text-center mb-4">Register now!</h1>
+          <h1 className="text-4xl font-bold  text-black text-center mb-4">Register now!</h1>
           <form onSubmit={handleRegister} className="flex flex-col gap-3">
             <label className="label">Name</label>
             <input
@@ -71,7 +71,7 @@ const Register = () => {
               value={formData.name}
               onChange={handleChange}
               placeholder="Your Name"
-              className="input input-bordered w-full"
+              className="input text-red input-bordered w-full"
               required
             />
             <label className="label">Email</label>
@@ -107,7 +107,7 @@ const Register = () => {
               <button
                 type="button"
                 onClick={() => setShowPassword(!showPassword)}
-                className="absolute right-2 top-1/2 -translate-y-1/2 btn btn-sm btn-ghost"
+                className="absolute text-black right-2 top-1/2 -translate-y-1/2 btn btn-sm btn-ghost"
               >
                 {showPassword ? 'Hide' : 'Show'}
               </button>
