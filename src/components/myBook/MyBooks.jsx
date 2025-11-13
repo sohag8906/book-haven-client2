@@ -8,7 +8,6 @@ const MyBooks = () => {
   const [books, setBooks] = useState([]);
   const [loading, setLoading] = useState(true);
 
-  // Update modal state
   const [editingBook, setEditingBook] = useState(null);
   const [formData, setFormData] = useState({
     title: "",
@@ -17,7 +16,7 @@ const MyBooks = () => {
     rating: "",
   });
 
-  // Load user's books
+  
   useEffect(() => {
     if (user?.email) {
       axios
@@ -34,7 +33,7 @@ const MyBooks = () => {
     }
   }, [user]);
 
-  // Delete Book
+ 
   const handleDelete = async (id) => {
     try {
       await axios.delete(`http://localhost:3000/books/${id}`);
@@ -45,7 +44,7 @@ const MyBooks = () => {
     }
   };
 
-  // Open Update Modal
+  
   const handleEdit = (book) => {
     setEditingBook(book);
     setFormData({
@@ -56,7 +55,7 @@ const MyBooks = () => {
     });
   };
 
-  // Handle form input change
+ 
   const handleChange = (e) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
   };
@@ -74,7 +73,7 @@ const MyBooks = () => {
         )
       );
       toast.success("Book updated successfully!");
-      setEditingBook(null); // close modal
+      setEditingBook(null); 
     } catch (err) {
       toast.error("Update failed!");
     }
@@ -83,25 +82,30 @@ const MyBooks = () => {
   if (loading)
     return (
       <div className="flex justify-center items-center h-[60vh]">
-        <p className="text-xl font-semibold">Loading...</p>
+        <p className="text-xl font-semibold text-gray-700 dark:text-gray-200">
+          Loading...
+        </p>
       </div>
     );
 
   return (
-    <div className="p-4">
-      {/* Toaster */}
+    <div className="p-4 bg-gray-100 dark:bg-gray-900 min-h-screen">
+     
       <Toaster position="top-right" reverseOrder={false} />
 
-      <h1 className="text-3xl font-bold mb-6 text-center">My Books</h1>
+      <h1 className="text-3xl font-bold mb-6 text-center text-gray-800 dark:text-gray-100">
+        My Books
+      </h1>
+
       {books.length === 0 ? (
-        <p className="text-center text-gray-600">
+        <p className="text-center text-gray-600 dark:text-gray-300">
           You haven't added any books yet.
         </p>
       ) : (
         <div className="overflow-x-auto">
-          <table className="table table-zebra w-full">
+          <table className="table table-zebra w-full text-gray-900 dark:text-gray-100">
             <thead>
-              <tr>
+              <tr className="bg-gray-200 dark:bg-gray-800 text-gray-800 dark:text-gray-200">
                 <th>Title</th>
                 <th>Author</th>
                 <th>Genre</th>
@@ -111,7 +115,10 @@ const MyBooks = () => {
             </thead>
             <tbody>
               {books.map((book) => (
-                <tr key={book._id}>
+                <tr
+                  key={book._id}
+                  className="hover:bg-gray-100 dark:hover:bg-gray-700"
+                >
                   <td>{book.title}</td>
                   <td>{book.author}</td>
                   <td>{book.genre}</td>
@@ -137,10 +144,10 @@ const MyBooks = () => {
         </div>
       )}
 
-      {/* Update Modal */}
+     
       {editingBook && (
         <div className="fixed inset-0 flex items-center justify-center bg-black/50 z-50">
-          <div className="bg-white p-6 rounded-lg w-96">
+          <div className="bg-white dark:bg-gray-800 text-gray-900 dark:text-gray-100 p-6 rounded-lg w-96">
             <h2 className="text-2xl font-bold mb-4">Update Book</h2>
             <input
               type="text"
@@ -148,7 +155,7 @@ const MyBooks = () => {
               placeholder="Title"
               value={formData.title}
               onChange={handleChange}
-              className="input input-bordered w-full mb-2"
+              className="input input-bordered w-full mb-2 bg-white dark:bg-gray-700 text-gray-900 dark:text-gray-100"
             />
             <input
               type="text"
@@ -156,7 +163,7 @@ const MyBooks = () => {
               placeholder="Author"
               value={formData.author}
               onChange={handleChange}
-              className="input input-bordered w-full mb-2"
+              className="input input-bordered w-full mb-2 bg-white dark:bg-gray-700 text-gray-900 dark:text-gray-100"
             />
             <input
               type="text"
@@ -164,7 +171,7 @@ const MyBooks = () => {
               placeholder="Genre"
               value={formData.genre}
               onChange={handleChange}
-              className="input input-bordered w-full mb-2"
+              className="input input-bordered w-full mb-2 bg-white dark:bg-gray-700 text-gray-900 dark:text-gray-100"
             />
             <input
               type="number"
@@ -172,7 +179,7 @@ const MyBooks = () => {
               placeholder="Rating"
               value={formData.rating}
               onChange={handleChange}
-              className="input input-bordered w-full mb-4"
+              className="input input-bordered w-full mb-4 bg-white dark:bg-gray-700 text-gray-900 dark:text-gray-100"
             />
             <div className="flex justify-end gap-2">
               <button

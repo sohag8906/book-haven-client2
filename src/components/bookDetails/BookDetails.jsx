@@ -12,21 +12,21 @@ const BookDetails = () => {
   const [comments, setComments] = useState([]);
   const [newComment, setNewComment] = useState("");
 
-  // ✅ বইয়ের ডেটা লোড করো
+  
   useEffect(() => {
     axios
       .get(`http://localhost:3000/books/${id}`)
       .then((res) => setBook(res.data))
       .catch(() => toast.error("Failed to load book details!"));
 
-    // ✅ কমেন্টস ফেচ করো
+   
     axios
-      .get(`http://localhost:3000/comments?bookId=${id}`)
+      .get(`http://localhost:3000/comments/${id}`) 
       .then((res) => setComments(res.data))
       .catch(() => toast.error("Failed to load comments!"));
   }, [id]);
 
-  // ✅ কমেন্ট সাবমিট করো
+  
   const handleAddComment = async (e) => {
     e.preventDefault();
     if (!newComment.trim()) return toast.error("Write something first!");
@@ -36,12 +36,12 @@ const BookDetails = () => {
       text: newComment,
       userName: user?.displayName || "Anonymous",
       userPhoto: user?.photoURL || "https://i.ibb.co/2Y7t2Cv/default-user.png",
-      date: new Date(),
+      date: new Date().toISOString(), 
     };
 
     try {
       const res = await axios.post("http://localhost:3000/comments", commentData);
-      setComments([...comments, res.data]); // রিয়েল টাইমে নতুন কমেন্ট দেখাবে
+      setComments([...comments, { ...commentData, _id: res.data.insertedId }]); 
       setNewComment("");
       toast.success("Comment added!");
     } catch (err) {
@@ -60,7 +60,7 @@ const BookDetails = () => {
     <div className="p-6 max-w-3xl mx-auto">
       <Toaster position="top-right" />
 
-      {/* ✅ বইয়ের তথ্য */}
+     
       <div className="flex flex-col md:flex-row gap-6">
         <img
           src={book.coverImage}
@@ -82,37 +82,42 @@ const BookDetails = () => {
         </div>
       </div>
 
-      {/* ✅ Comment Section */}
+     
       <div className="mt-10">
         <h2 className="text-2xl font-bold mb-4">Comments 💬</h2>
 
-        {/* কমেন্ট লিস্ট */}
+       
         {comments.length === 0 ? (
           <p className="text-gray-500">No comments yet. Be the first!</p>
         ) : (
-          comments.map((comment) => (
-            <div key={comment._id} className="border-b py-3">
-              <div className="flex items-center gap-3">
-                <img
-                  src={comment.userPhoto}
-                  alt={comment.userName}
-                  className="w-10 h-10 rounded-full"
-                />
-                <div>
-                  <p className="font-semibold">{comment.userName}</p>
-                  <p className="text-sm text-gray-500">
-                    {formatDistanceToNow(new Date(comment.date), {
-                      addSuffix: true,
-                    })}
-                  </p>
+          comments.map((comment) => {
+            let commentDate;
+            try {
+              commentDate = comment.date ? formatDistanceToNow(new Date(comment.date), { addSuffix: true }) : "Just now";
+            } catch {
+              commentDate = "Just now";
+            }
+
+            return (
+              <div key={comment._id} className="border-b py-3">
+                <div className="flex items-center gap-3">
+                  <img
+                    src={comment.userPhoto}
+                    alt={comment.userName}
+                    className="w-10 h-10 rounded-full"
+                  />
+                  <div>
+                    <p className="font-semibold">{comment.userName}</p>
+                    <p className="text-sm text-gray-500">{commentDate}</p>
+                  </div>
                 </div>
+                <p className="mt-2 text-gray-800">{comment.text}</p>
               </div>
-              <p className="mt-2 text-gray-800">{comment.text}</p>
-            </div>
-          ))
+            );
+          })
         )}
 
-        {/* ✅ Add New Comment */}
+       
         {user ? (
           <form onSubmit={handleAddComment} className="mt-5 flex gap-3">
             <input

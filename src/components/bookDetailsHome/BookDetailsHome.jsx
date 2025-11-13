@@ -38,7 +38,7 @@ const BookDetailsHome = () => {
   }
 
   return (
-    <div className="max-w-4xl mx-auto my-10 p-6 bg-gray-100 dark:bg-gray-800 rounded-lg shadow-lg">
+    <div className="max-w-4xl mx-auto my-4 mt-4 p-2 bg-gray-100 dark:bg-gray-800 rounded-lg shadow-lg">
       <div className="flex flex-col md:flex-row items-center gap-8">
         {/* Book Image */}
         <img
